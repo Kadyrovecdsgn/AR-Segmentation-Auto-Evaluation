@@ -327,7 +327,7 @@ mr_model = maskrcnn_resnet50_fpn(
 3. Использовать `torch.backends.cudnn.deterministic = True` и `benchmark = False`.
 
 > **Примечание:** полная детерминированность на GPU не гарантируется при использовании
-> некоторых CUDA-операций (атомарные суммы в свёртках). Результаты могут незначительно
+> некоторых CUDA-операций. Результаты могут незначительно
 > отличаться между запусками при одинаковом seed.
 
 ---
@@ -341,6 +341,21 @@ mr_model = maskrcnn_resnet50_fpn(
 ### Производительность (FPS на Tesla T4)
 
 --------
+### Визуальные результаты работы моделей (качество сегментации и масок)
+#### Mask R-CNN
+![mask r-cnn results](results/imagesAndGraphs/maskRCNN_results.png)
+#### YOLO (yolov11n-seg)
+![yolov11n-seg results](results/imagesAndGraphs/yolov11n-seg_results.png)
+#### SAM2 (sam2-tiny)
+![sam2-tiny results](results/imagesAndGraphs/sam2_results.png)
+#### MobileSAM
+![mobilesam results](results/imagesAndGraphs/mobileSAM_results.png)
+--------
+
+### SAM 2 (без детектора) vs Mask R-CNN
+--------
+![sam2_toyota_results](results/imagesAndGraphs/tuned_toyota_inference_SAM2_result.png)
+![rcnn_toyota_results](results/imagesAndGraphs/tuned_toyota_inference_maskRCNN_result.png)
 
 ---
 
