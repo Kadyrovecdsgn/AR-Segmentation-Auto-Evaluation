@@ -19,7 +19,7 @@ tqdm>=4.65.0
 PyYAML>=6.0
 scipy>=1.11.0
 
-# ── SAM2 (Facebook Research) — установить вручную из репозитория ──────────────
+# ── SAM2 (Facebook Research) — can also install inside .ipynb-notebook ──────────────
 # git clone https://github.com/facebookresearch/sam2.git
 # cd sam2 && pip install -e .
 supervision>=0.18.0
@@ -28,5 +28,5 @@ pycocotools>=2.0.7
 # ── MobileSAM ─────────────────────────────────────────────────────────────────
 # pip install git+https://github.com/ChaoningZhang/MobileSAM.git
 
-# ── Transformers (для zero-shot SAM2 через HuggingFace) ───────────────────────
+# ── Transformers (for zero-shot SAM2 through HuggingFace) ───────────────────────
 transformers>=4.40.0
