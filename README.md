@@ -131,50 +131,39 @@ mAP@0.50:0.95 = mean(Метрика @ t)
 ```
 AR-Segmentation-Auto-Evaluation/
 │
-├── Code/
-    └── SP2_SegModelsForAutoCustomization.ipynb # Основной Jupyter(Colab)-блокнот проекта
-├── requirements.txt                          # Зависимости
-├── README.md                                 # Данный файл
+|
+├── requirements.txt # Зависимости
+├── README.md # Описание проекта репозитория
 │
 |
+├── Code/
+|    └── SP2_SegModelsForAutoCustomization.ipynb # Основной Jupyter(Colab)-блокнот проекта
 |
 ├── results/
-|   └── mask R-CNN
-        └── mask_rcnn_best.pt
-    ├── mobileSAM
-        └── mobile_sam_carparts_best.pt
-    ├── sam2
-        └── sam2_tiny_carparts_best.pt
-    └── yolon11-seg
-        └── best.pt
+|   └── mask R-CNN # Содержит веса конкретной модели
+|    |    └── mask_rcnn_best.pt
+|    ├── mobileSAM # Содержит веса конкретной модели
+|    |    └── mobile_sam_carparts_best.pt
+|    |
+|    ├── sam2 # Содержит веса конкретной модели
+|    |    └── sam2_tiny_carparts_best.pt
+|    ├── yolon11-seg # Содержит веса конкретной модели
+|    |    └── best.pt
+|    |
+|    └── imagesAndGraphs #Содержит результаты в виде изображений и графов
 |
-├── datasets/ #
-│   └── carparts-seg/
-│       ├── carparts-seg.yaml
-│       ├── images/
-│       │   ├── train/
-│       │   └── val/
-│       └── labels/
-│           ├── train/
-│           └── val/
-│
-├── checkpoints/                              # Сохраняются автоматически
-│   ├── sam2_carparts_checkpoints/
-│   │   ├── sam2_tiny_carparts_best.pt
-│   │   └── sam2_tiny_carparts_last.pt
-│   ├── mobile_sam_carparts_checkpoints/
-│   │   ├── mobile_sam_carparts_best.pt
-│   │   └── mobile_sam_carparts_last.pt
-│   └── mask_rcnn_carparts_checkpoints/
-│       ├── mask_rcnn_best.pt
-│       └── mask_rcnn_last.pt
-│
-└── runs/
-    └── segment/
-        └── yolo_carparts/
-            └── yolo11n_seg_finetune/
-                └── weights/
-                    └── best.pt
+|
+|
+└── dataset/ # Папка с оригинальным датасетом
+   └── carparts-seg/
+       ├── carparts-seg.yaml
+       ├── images/
+       │   ├── train/
+       │   └── val/
+       └── labels/
+           ├── train/
+           └── val/
+
 ```
 
 ---
@@ -187,7 +176,7 @@ git clone <your-repo-url>
 cd SP2_SegModelsForAutoCustomization
 ```
 
-### 2. Создание виртуального окружения (рекомендуется)
+### 2. Создание виртуального окружения 
 ```bash
 python -m venv venv
 source venv/bin/activate        # Linux / macOS
@@ -216,7 +205,7 @@ cd ..
 pip install git+https://github.com/ChaoningZhang/MobileSAM.git
 ```
 
-### 6. Загрузка весов
+### 6. Загрузка предобуенных весов для последующего дообучения на датасете проекта
 
 **SAM2-tiny:**
 ```bash
@@ -235,13 +224,13 @@ wget -O mobile_sam.pt \
 
 ## Запуск экспериментов
 
-> Все эксперименты выполняются в **Google Colab** (GPU: Tesla T4 / A100).
+> Все эксперименты выполняются в блокноте **Google Colab** (GPU: Tesla T4 / A100).
 > Для локального запуска адаптируйте пути `/content/...` под свою файловую систему.
 
 ### Шаг 0 — Фиксация seed (первая ячейка)
 ```python
 # Запустить ячейку "Фиксация seed-ов" перед любым другим кодом
-SEED = 42
+seed = 42
 ```
 
 ### Шаг 1 — Загрузка датасета
@@ -333,7 +322,7 @@ mr_model = maskrcnn_resnet50_fpn(
 
 Для полной воспроизводимости экспериментов:
 
-1. Первой ячейкой блокнота должна быть ячейка фиксации seed (`SEED = 42`).
+1. Первой ячейкой блокнота должна быть ячейка фиксации seed.
 2. При создании DataLoader передавать `worker_init_fn=seed_worker, generator=g` (определены в seed-ячейке).
 3. Использовать `torch.backends.cudnn.deterministic = True` и `benchmark = False`.
 
