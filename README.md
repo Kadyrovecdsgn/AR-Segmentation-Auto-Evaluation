@@ -129,13 +129,26 @@ mAP@0.50:0.95 = mean(Метрика @ t)
 ## Структура проекта
 
 ```
-SP2_SegModelsForAutoCustomization/
+AR-Segmentation-Auto-Evaluation/
 │
-├── SP2_SegModelsForAutoCustomization.ipynb   # Основной блокнот
+├── Code/
+    └── SP2_SegModelsForAutoCustomization.ipynb # Основной Jupyter(Colab)-блокнот проекта
 ├── requirements.txt                          # Зависимости
 ├── README.md                                 # Данный файл
 │
-├── datasets/
+|
+|
+├── results/
+|   └── mask R-CNN
+        └── mask_rcnn_best.pt
+    ├── mobileSAM
+        └── mobile_sam_carparts_best.pt
+    ├── sam2
+        └── sam2_tiny_carparts_best.pt
+    └── yolon11-seg
+        └── best.pt
+|
+├── datasets/ #
 │   └── carparts-seg/
 │       ├── carparts-seg.yaml
 │       ├── images/
@@ -334,24 +347,11 @@ mr_model = maskrcnn_resnet50_fpn(
 
 ### Качество сегментации (Unified Protocol — Mask Recall @ IoU)
 
-| Модель | mAP@0.50 | mAP@0.75 | mAP@0.50:0.95 | Mean IoU | Протокол |
-|---|---|---|---|---|---|
-| YOLO11n-seg | 0.683 | — | 0.531 | — | Full pipeline |
-| SAM2-tiny FT | 0.996 | 0.941 | 0.847 | 0.898 | Oracle GT-box prompt |
-| MobileSAM FT | 0.995 | 0.925 | 0.817 | 0.883 | Oracle GT-box prompt |
-| Mask R-CNN FT | — | — | — | — | Full pipeline |
+--------
 
 ### Производительность (FPS на Tesla T4)
 
-| Модель | Время/кадр | FPS | Параметры |
-|---|---|---|---|
-| YOLO11n-seg | ~6 мс | ~167 | 2.8M |
-| SAM2-tiny FT | — | — | 38.9M |
-| MobileSAM FT | — | — | 9.66M |
-| Mask R-CNN FT | — | — | 44.4M |
-
-> FPS для SAM2 и MobileSAM указывается при 1 объекте (1 prompt) на изображение.
-> При большем числе объектов время prompt+decoder масштабируется линейно.
+--------
 
 ---
 
@@ -376,8 +376,8 @@ mr_model = maskrcnn_resnet50_fpn(
 ## Аппаратное обеспечение
 
 Эксперименты проводились в среде **Google Colab**:
-- **GPU:** NVIDIA Tesla T4 (14 GB VRAM)
-- **RAM:** 12.7 GB
+- **GPU:** NVIDIA Tesla T4 (15 GB VRAM)
+- **RAM:** 16 GB
 - **CUDA:** 12.8
 - **Python:** 3.12.13
 - **PyTorch:** 2.11.0+cu128
