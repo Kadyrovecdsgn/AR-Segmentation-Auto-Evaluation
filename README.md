@@ -322,7 +322,7 @@ mr_model = maskrcnn_resnet50_fpn(
 
 Для полной воспроизводимости экспериментов:
 
-1. Первой ячейкой блокнота должна быть ячейка фиксации seed.
+1. Первой запущенной ячейкой блокнота должна быть ячейка фиксации seed.
 2. При создании DataLoader передавать `worker_init_fn=seed_worker, generator=g` (определены в seed-ячейке).
 3. Использовать `torch.backends.cudnn.deterministic = True` и `benchmark = False`.
 
