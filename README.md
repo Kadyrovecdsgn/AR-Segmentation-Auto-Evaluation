@@ -327,7 +327,7 @@ mr_model = maskrcnn_resnet50_fpn(
 3. Использовать `torch.backends.cudnn.deterministic = True` и `benchmark = False`.
 
 > **Примечание:** полная детерминированность на GPU не гарантируется при использовании
-> некоторых CUDA-операций (атомарные суммы в свёртках). Результаты могут незначительно
+> некоторых CUDA-операций. Результаты могут незначительно
 > отличаться между запусками при одинаковом seed.
 
 ---
@@ -337,10 +337,39 @@ mr_model = maskrcnn_resnet50_fpn(
 ### Качество сегментации (Unified Protocol — Mask Recall @ IoU)
 
 --------
+| Модель | mAP@0.50 | mAP@0.75 | mAP@0.50:0.95 | Mean IoU | Протокол |
+|---|---|---|---|---|---|
+| YOLO11n-seg | 0.988 | 0.898 | 0.8 | 0.872 | Full pipeline |
+| SAM2-tiny FT | 0.996 | 0.941 | 0.847 | 0.897 | Oracle GT-box prompt |
+| MobileSAM FT | 0.995 | 0.925 | 0.816 | 0.883 | Oracle GT-box prompt |
+| Mask R-CNN FT | 0.96 | 0.863 | 0.754 | 0.839 | Full pipeline |
+ 
+--------
 
 ### Производительность (FPS на Tesla T4)
-
 --------
+| Модель | Размер модели (МБ) | FPS | Параметры |
+|---|---|---|---|
+| YOLO11n-seg | ~5.7 | 69 | 2.8M |
+| SAM2-tiny FT | ~184 | 7.4 | 38.9M |
+| MobileSAM FT | ~72 | 18 | 9.66M |
+| Mask R-CNN FT | ~333 | 11.2 | 44.4M |
+--------
+### Визуальные результаты работы моделей (качество сегментации и масок)
+#### Mask R-CNN
+![mask r-cnn results](results/imagesAndGraphs/maskRCNN_results.png)
+#### YOLO (yolov11n-seg)
+![yolov11n-seg results](results/imagesAndGraphs/yolov11n-seg_results.png)
+#### SAM2 (sam2-tiny)
+![sam2-tiny results](results/imagesAndGraphs/sam2_results.png)
+#### MobileSAM
+![mobilesam results](results/imagesAndGraphs/mobileSAM_results.png)
+--------
+
+### SAM 2 (без детектора) vs Mask R-CNN
+--------
+![sam2_toyota_results](results/imagesAndGraphs/tuned_toyota_inference_SAM2_result.png)
+![rcnn_toyota_results](results/imagesAndGraphs/tuned_toyota_inference_maskRCNN_result.png)
 
 ---
 
